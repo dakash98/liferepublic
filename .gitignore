@@ -1,2 +1,5 @@
 # Generated from environment variables by generate-config.sh
 config.js
+
+# Render build output
+public/

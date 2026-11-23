@@ -1,0 +1,20 @@
+# Render Blueprint: deploys this site as a Render Static Site.
+# In Render: New → Blueprint → pick this repository.
+services:
+  - type: web
+    name: liferepublic
+    runtime: static
+    branch: master
+    # Write config.js from the env var, then copy only the public files into ./public
+    buildCommand: sh generate-config.sh && rm -rf public && mkdir public && cp index.html styles.css script.js config.js public/
+    staticPublishPath: ./public
+    envVars:
+      - key: LEAD_DESK_WEBHOOK_URL
+        sync: false   # Render asks you for the value when you create the Blueprint
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /config.js
+        name: Cache-Control
+        value: no-cache
