@@ -6,7 +6,7 @@ services:
     runtime: static
     branch: master
     # Write config.js from the env var, then copy only the public files into ./public
-    buildCommand: sh generate-config.sh && rm -rf public && mkdir public && cp index.html styles.css script.js config.js public/
+    buildCommand: sh generate-config.sh && rm -rf public && mkdir public && cp index.html styles.css script.js config.js public/ && cp -R assets public/
     staticPublishPath: ./public
     envVars:
       - key: LEAD_DESK_WEBHOOK_URL
@@ -18,3 +18,6 @@ services:
       - path: /config.js
         name: Cache-Control
         value: no-cache
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=604800

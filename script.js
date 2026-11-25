@@ -116,9 +116,97 @@ form.addEventListener('submit', async e => {
   }
 });
 
+// ===== Tour videos =====
+// Room names, the opening title and the end card are built into the video files themselves.
+// preview = the short silent loop [start, end] in seconds shown on the cards.
+const TOURS = [
+  { src: 'assets/tour/tour-1.mp4', poster: 'assets/tour/tour-1.jpg', title: 'The flat & the gardens', preview: [25.4, 37.4] },
+  { src: 'assets/tour/tour-2.mp4', poster: 'assets/tour/tour-2.jpg', title: 'Room by room', preview: [90.4, 104.4] },
+];
+// Silent looping previews that play only while the card is on screen.
+// Skipped for visitors who asked for reduced motion or data saving; they see the cover image.
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const saveData = navigator.connection && navigator.connection.saveData;
+const tourCards = [...document.querySelectorAll('.tour-card')];
+
+tourCards.forEach(card => {
+  const tour = TOURS[card.dataset.index];
+  const video = card.querySelector('video');
+  const bar = card.querySelector('.tour-progress span');
+  const [from, to] = tour.preview;
+  card._preview = video;
+
+  video.addEventListener('loadedmetadata', () => { video._seekTried = true; video.currentTime = from; });
+  video.addEventListener('timeupdate', () => {
+    const t = video.currentTime;
+    if (t >= to) { video.currentTime = from; return; }
+    if (t < from - 0.5) {
+      // Not at the preview yet: jump there once; if the server can't seek, keep playing from the start
+      if (!video._seekTried) { video._seekTried = true; video.currentTime = from; }
+      return;
+    }
+    bar.style.width = `${((t - from) / (to - from)) * 100}%`;
+  });
+  card.querySelector('.tour-open').addEventListener('click', () => openTour(Number(card.dataset.index)));
+});
+
+const previewIO = !reduceMotion && !saveData && 'IntersectionObserver' in window && new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    const v = en.target.querySelector('video');
+    if (en.isIntersecting && !modal.open) {
+      if (v.preload === 'none') v.preload = 'auto';
+      v.play().catch(() => {});
+    } else {
+      v.pause();
+    }
+  });
+}, { threshold: 0.45 });
+if (previewIO) tourCards.forEach(c => previewIO.observe(c));
+
+// Full player
+const modal = document.querySelector('.tour-modal');
+const player = modal.querySelector('.tm-video');
+const endScreen = modal.querySelector('.tm-end');
+let current = 0;
+// The background music is mixed into the video files, so the player just plays them with sound.
+
+function openTour(i) {
+  current = i;
+  const tour = TOURS[i];
+  tourCards.forEach(c => c._preview.pause());
+  endScreen.hidden = true;
+  player.poster = tour.poster;
+  player.src = tour.src;
+  if (!modal.open) {
+    modal.showModal();
+    document.body.classList.add('modal-open');
+  }
+  player.muted = false;
+  player.volume = 0.9;
+  player.play().catch(() => {});
+}
+
+player.addEventListener('play', () => { endScreen.hidden = true; });
+player.addEventListener('ended', () => {
+  modal.querySelector('.tm-next').textContent = current < TOURS.length - 1 ? 'Next tour →' : 'First tour →';
+  endScreen.hidden = false;
+});
+
+modal.querySelector('.tm-replay').addEventListener('click', () => { player.currentTime = 0; player.play(); });
+modal.querySelector('.tm-next').addEventListener('click', () => openTour((current + 1) % TOURS.length));
+modal.querySelector('.tm-close').addEventListener('click', () => modal.close());
+modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });   // click on backdrop
+modal.querySelectorAll('.tm-book').forEach(a => a.addEventListener('click', () => modal.close()));
+modal.addEventListener('close', () => {
+  player.pause();
+  document.body.classList.remove('modal-open');
+  // resume previews that are on screen
+  if (previewIO) tourCards.forEach(c => { previewIO.unobserve(c); previewIO.observe(c); });
+});
+
 // Reveal on scroll
 const io = 'IntersectionObserver' in window && new IntersectionObserver(entries => {
   entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
 }, { threshold: .12 });
-document.querySelectorAll('.section-head, .township-grid, .units, .plans-pay, .plan-switch, .amenities, .loc-grid, .visit-form, .faq-list')
+document.querySelectorAll('.section-head, .township-grid, .units, .plans-pay, .plan-switch, .tour-grid, .amenities, .loc-grid, .visit-form, .faq-list')
   .forEach(el => { if (io) { el.classList.add('reveal'); io.observe(el); } });

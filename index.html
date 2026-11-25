@@ -26,6 +26,7 @@
       <li><a href="#township">Township</a></li>
       <li><a href="#residences">Residences</a></li>
       <li><a href="#plans">Plans</a></li>
+      <li><a href="#tour">Tour</a></li>
       <li><a href="#living">Amenities</a></li>
       <li><a href="#location">Location</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -157,10 +158,72 @@
   </div>
 </section>
 
+<!-- ============ TOUR ============ -->
+<section class="section tour" id="tour">
+  <header class="section-head">
+    <span class="num">04</span>
+    <h2>Walk through it<br>before you visit.</h2>
+  </header>
+  <div class="tour-grid">
+    <div class="tour-copy">
+      <p>From the lift lobby to the balcony, filmed on site. Step out onto the balcony and look down over the podium gardens, the amphitheatre lawn and the sports courts.</p>
+      <ul class="tour-tags" aria-label="Seen in the tours">
+        <li>Lift lobby</li><li>Living room</li><li>Kitchen</li><li>Bedrooms</li><li>Balcony views</li><li>Podium gardens</li><li>Sports courts</li>
+      </ul>
+      <a class="btn btn-solid" href="#visit">See it in person</a>
+    </div>
+
+    <figure class="tour-card" data-index="0">
+      <div class="tour-frame">
+        <video muted playsinline preload="none" poster="assets/tour/tour-1.jpg" aria-hidden="true" tabindex="-1">
+          <source src="assets/tour/tour-1.mp4" type="video/mp4">
+        </video>
+        <button class="tour-open" type="button" aria-label="Watch walkthrough 1, 55 seconds">
+          <span class="tour-pill"><span class="tri" aria-hidden="true"></span>Watch tour</span>
+          <span class="tour-dur">0:55</span>
+        </button>
+        <span class="tour-progress" aria-hidden="true"><span></span></span>
+      </div>
+      <figcaption><b>The flat &amp; the gardens</b><span>Lobby, rooms and the podium view</span></figcaption>
+    </figure>
+
+    <figure class="tour-card" data-index="1">
+      <div class="tour-frame">
+        <video muted playsinline preload="none" poster="assets/tour/tour-2.jpg" aria-hidden="true" tabindex="-1">
+          <source src="assets/tour/tour-2.mp4" type="video/mp4">
+        </video>
+        <button class="tour-open" type="button" aria-label="Watch walkthrough 2, 1 minute 53 seconds">
+          <span class="tour-pill"><span class="tri" aria-hidden="true"></span>Watch tour</span>
+          <span class="tour-dur">1:53</span>
+        </button>
+        <span class="tour-progress" aria-hidden="true"><span></span></span>
+      </div>
+      <figcaption><b>Room by room</b><span>Kitchen, bedrooms, baths and views</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- Tour player (opens fullscreen-style) -->
+<dialog class="tour-modal" aria-label="Video tour">
+  <div class="tm-stage">
+    <video class="tm-video" playsinline controls></video>
+    <div class="tm-end" hidden>
+      <p class="tm-end-kicker">Liked what you saw?</p>
+      <p class="tm-end-title">See it standing, in person.</p>
+      <a class="btn btn-solid tm-book" href="#visit">Book a site visit</a>
+      <div class="tm-end-row">
+        <button class="tm-replay" type="button">↺ Replay</button>
+        <button class="tm-next" type="button">Next tour →</button>
+      </div>
+    </div>
+  </div>
+  <button class="tm-close" type="button" aria-label="Close video">×</button>
+</dialog>
+
 <!-- ============ LIVING / AMENITIES ============ -->
 <section class="section living" id="living">
   <header class="section-head">
-    <span class="num">04</span>
+    <span class="num">05</span>
     <h2>What's downstairs.</h2>
   </header>
   <ul class="amenities">
@@ -185,7 +248,7 @@
 <!-- ============ LOCATION ============ -->
 <section class="section location" id="location">
   <header class="section-head">
-    <span class="num">05</span>
+    <span class="num">06</span>
     <h2>Close to work.<br>Far from the noise.</h2>
   </header>
   <div class="loc-grid">
@@ -210,7 +273,7 @@
 <!-- ============ VISIT / FORM ============ -->
 <section class="section visit" id="visit">
   <div class="visit-copy">
-    <span class="num">06</span>
+    <span class="num">07</span>
     <h2>Come and see it standing.</h2>
     <p>Tell us when suits you. We'll arrange a site visit, share the full cost sheet, and answer questions on loans and payment plans. No pressure, no pop-ups.</p>
   </div>
@@ -234,7 +297,7 @@
 <!-- ============ FAQ ============ -->
 <section class="section faq" id="faq">
   <header class="section-head">
-    <span class="num">07</span>
+    <span class="num">08</span>
     <h2>Straight answers.</h2>
   </header>
   <div class="faq-list">
@@ -253,11 +316,10 @@
 <footer class="footer">
   <div class="rera">
     <p><b>MahaRERA</b> P52100077008 · Echoes Phase 1 PM1261012502409</p>
-    <p><b>Agent RERA</b> <span class="placeholder">[Your MahaRERA agent registration no.]</span></p>
     <p><a href="https://maharera.maharashtra.gov.in" target="_blank" rel="noopener">maharera.maharashtra.gov.in ↗</a></p>
   </div>
-  <p class="disclaimer">This website is operated by <span class="placeholder">[Your company name]</span>, an independent marketing partner. It is not the official website of Kolte-Patil Developers Ltd. Information, images and prices are indicative, for reference only, and do not form an offer or contract. Illustrations are artistic representations. Verify all details with the developer and on MahaRERA before booking.</p>
-  <p class="small">© 2026 <span class="placeholder">[Your company name]</span> · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+  <p class="disclaimer">This website is operated by an independent marketing partner. It is not the official website of Kolte-Patil Developers Ltd. Information, images and prices are indicative, for reference only, and do not form an offer or contract. Illustrations are artistic representations. Verify all details with the developer and on MahaRERA before booking.</p>
+  <p class="small">© 2026 · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
 </footer>
 
 <a class="float-call" href="#visit" aria-label="Book a site visit">Book a visit</a>
